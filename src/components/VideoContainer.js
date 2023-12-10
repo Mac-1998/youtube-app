@@ -2,9 +2,14 @@ import { useEffect, useState } from "react";
 import { YOUTUBE_VIDEOS_API } from "../utils/constants";
 import VideoCard from "./VideoCard";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const VideoContainer = () => {
   const [videos, setVideos] = useState([]);
+
+  const searchVideos = useSelector(
+    (store) => store.searchVideos.searchVideosResults
+  );
 
   useEffect(() => {
     getVideos();
@@ -18,11 +23,17 @@ const VideoContainer = () => {
 
   return (
     <div className="flex flex-wrap pl-6 gap-4">
-      {videos.map((video) => (
-        <Link key={video.id} to={"/watch?v=" + video.id}>
-          <VideoCard info={video} />
-        </Link>
-      ))}
+      {searchVideos.length === 0
+        ? videos.map((video) => (
+            <Link key={video.id} to={"/watch?v=" + video.id}>
+              <VideoCard info={video} />
+            </Link>
+          ))
+        : searchVideos.map((video) => (
+            <Link key={video.etag} to={"/watch?v=" + video.id}>
+              <VideoCard info={video} />
+            </Link>
+          ))}
     </div>
   );
 };
