@@ -8,6 +8,7 @@ import {
 } from "../utils/constants";
 import { cacheResults } from "../utils/searchSlice";
 import { addSearchVideosResult } from "../utils/searchVideosSlice";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -15,6 +16,8 @@ const Header = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const searchCache = useSelector((store) => store.search);
 
@@ -55,6 +58,9 @@ const Header = () => {
     } else {
       getSearchResults();
     }
+
+    setShowSuggestions(false);
+    navigate("/");
   };
 
   const getSearchResults = async () => {
@@ -66,7 +72,7 @@ const Header = () => {
   };
 
   return (
-    <div className="flex items-center justify-between h-16">
+    <div className="flex items-center justify-between h-16 fixed w-full bg-white">
       <div className="flex items-center">
         <img
           onClick={toggleMenuHandler}
@@ -74,22 +80,26 @@ const Header = () => {
           src="https://rueeazy.github.io/youtube-clone/Assets/hamburger-icon.png"
           alt="hamberger-icon"
         />
-
-        <img
-          className="w-28 "
-          src="https://logowik.com/content/uploads/images/899_youtube_2017logo.jpg"
-          alt="youtube"
-        />
+        <Link to={"/"}>
+          <img
+            className="w-28 h-16 object-cover"
+            src="https://logowik.com/content/uploads/images/899_youtube_2017logo.jpg"
+            alt="youtube"
+          />
+        </Link>
       </div>
       <div className="flex items-center">
         <div className="">
           <form onSubmit={handleSearchSubmitClick}>
             <input
-              className="border border-gray-300 w-[550px] p-2 rounded-l-full px-4 focus:outline-none focus:border-blue-800 shadow-inner"
+              className="border border-gray-300 w-[200px] md:w-[550px] p-2 rounded-l-full px-4 focus:outline-none focus:border-blue-800 shadow-inner"
               placeholder="Search"
               value={searchQuery}
               name="search"
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setShowSuggestions(true);
+              }}
               onFocus={() => setShowSuggestions(true)}
               onBlur={() => setShowSuggestions(false)}
             />

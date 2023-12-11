@@ -1,9 +1,17 @@
+import { useSelector } from "react-redux";
+
 const VideoCard = ({ info }) => {
   const { snippet, statistics } = info;
   //const { channelTitle, title, thumbnails } = snippet;
 
+  const isSidebasMenuOpen = useSelector((store) => store.app.isMenuOpen);
+
   return (
-    <div className="w-[310px] cursor-pointer">
+    <div
+      className={`${
+        isSidebasMenuOpen ? "w-[310px]" : "w-[340px]"
+      } cursor-pointer`}
+    >
       <img
         className="rounded-xl"
         src={snippet?.thumbnails?.medium?.url}

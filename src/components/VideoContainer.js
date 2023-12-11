@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 const VideoContainer = () => {
   const [videos, setVideos] = useState([]);
 
+  const isSidebasMenuOpen = useSelector((store) => store.app.isMenuOpen);
+
   const searchVideos = useSelector(
     (store) => store.searchVideos.searchVideosResults
   );
@@ -22,7 +24,11 @@ const VideoContainer = () => {
   };
 
   return (
-    <div className="flex flex-wrap pl-6 gap-4">
+    <div
+      className={`flex flex-wrap pl-6 gap-4 mt-36 absolute -z-20 ${
+        isSidebasMenuOpen ? "ml-60" : "ml-20"
+      }`}
+    >
       {searchVideos.length === 0
         ? videos.map((video) => (
             <Link key={video.id} to={"/watch?v=" + video.id}>
@@ -30,7 +36,7 @@ const VideoContainer = () => {
             </Link>
           ))
         : searchVideos.map((video) => (
-            <Link key={video.etag} to={"/watch?v=" + video.id}>
+            <Link key={video.etag} to={"/watch?v=" + video.id.videoId}>
               <VideoCard info={video} />
             </Link>
           ))}

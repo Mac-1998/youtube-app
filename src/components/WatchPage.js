@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { closeMenu } from "../utils/appSlice";
 import { YOUTUBE_WATCH_API1, YOUTUBE_WATCH_API2 } from "../utils/constants";
 import { useSearchParams } from "react-router-dom";
@@ -9,8 +9,6 @@ import LiveChat from "./LiveChat";
 const WatchPage = () => {
   const [searchParams] = useSearchParams();
   const [video, setVideo] = useState([]);
-
-  const isSidebasMenuOpen = useSelector((store) => store.app.isMenuOpen);
 
   useEffect(() => {
     getVideo();
@@ -30,12 +28,12 @@ const WatchPage = () => {
   }, []);
 
   return (
-    <div className="w-full">
-      <div className={`${!isSidebasMenuOpen ? "pl-24" : "pl-5"} pt-4 flex`}>
+    <div className="w-full mt-16">
+      <div className="pl-24 pt-4 flex">
         <div>
           <iframe
             className="rounded-xl"
-            width={!isSidebasMenuOpen ? "1280" : "1116"}
+            width="1280"
             height="720"
             src={
               "https://www.youtube.com/embed/" +

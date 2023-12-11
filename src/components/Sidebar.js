@@ -6,7 +6,7 @@ const Sidebar = () => {
 
   return (
     showSidebar && (
-      <div>
+      <div className="fixed bg-white mt-16 h-full">
         <div className="w-60 p-3">
           <ul className="px-3 pt-3">
             <li>
